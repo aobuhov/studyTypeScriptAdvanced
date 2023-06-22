@@ -1,5 +1,9 @@
-const btn = document.querySelector('#btn')
-btn!.addEventListener('click',
-    ()=>{
-    console.log('btn clicked')
-})
+const btn = document.querySelector('#bt')
+if (btn) {
+    btn!.addEventListener('click',
+        () => {
+            console.log('btn clicked')
+        })
+} else {
+    console.log('btn is null')
+}
