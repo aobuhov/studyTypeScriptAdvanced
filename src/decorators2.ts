@@ -2,6 +2,17 @@ interface ComponentDecorator {
     selector: string,
     template: string
 }
+function Bind(_:any, _2:any, descriptor: PropertyDescriptor): PropertyDescriptor {
+    const original = descriptor.value
+    return {
+        configurable: true,
+        enumerable: false,
+        get() {
+            return original.bind(this)
+        }
+    }
+}
+
 function FComponent(config: ComponentDecorator) {
     return function <T extends {new(...args: any[]): object}>
     (Constructor: T) {
@@ -31,9 +42,13 @@ function FComponent(config: ComponentDecorator) {
 class CardComponent {
     constructor(public name: string) {
     }
+    @Bind
     logName(): void {
         console.log(`component name: ${this.name}`)
     }
 }
 
 const card = new CardComponent('My card component')
+
+const btn1 = document.querySelector('#bt')!
+btn1.addEventListener('click', card.logName)
